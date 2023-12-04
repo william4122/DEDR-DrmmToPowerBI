@@ -1,12 +1,12 @@
 # Get DrmmToPowerBI registry values
-$Config = Get-ItemProperty -Path Registry::HKEY_LOCAL_MACHINE\SOFTWARE\DrmmToPowerBI -ErrorAction SilentlyContinue
+$Config = Get-ItemProperty -Path Registry::HKEY_LOCAL_MACHINE\SOFTWARE\DEDRToPowerBI -ErrorAction SilentlyContinue
 if (!$Config) {
 	Write-Host 'Registry keys not found. Please import DrmmToPowerBI.reg first!'
 	exit 1
 }
 
-if ( $null -ne $env:DrmmToPowerBICredentialKey ) {
-	$EncryptionKeyBytes = ( [system.Text.Encoding]::UTF8 ).GetBytes( $env:DrmmToPowerBICredentialKey )
+if ( $null -ne $env:DEDRToPowerBICredentialKey ) {
+	$EncryptionKeyBytes = ( [system.Text.Encoding]::UTF8 ).GetBytes( $env:DEDRToPowerBICredentialKey )
 	$Config.SQLPassword = $Config.SQLPassword | ConvertTo-SecureString -Key $EncryptionKeyBytes |
 	ForEach-Object { [Runtime.InteropServices.Marshal]::PtrToStringAuto( [Runtime.InteropServices.Marshal]::SecureStringToBSTR( $_ ) ) }
 }
